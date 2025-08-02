@@ -1,96 +1,71 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# [81 shades of square] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [the think tank]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: [Nezha Jaleel] - [mar basrlious christian college of engineering]
+- Member 2: [Gauripriya p g] - [mar basrlious christian college of engineering]
 
 ### Project Description
-[2-3 lines about what your project does]
+[This project detects a QR code from an uploaded image, warps it into a perfect square, and accurately counts the number of modules (squares) it contains. It also displays the decoded QR content and calculates the total squares based on the QR’s grid size.
+]
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+[This project humorously “solves” the very important problem of counting the tiny black-and-white squares inside a QR co, even though no one really needs to know that number.
+It’s part of a “useless project” challenge, making it intentionally over-engineered for a trivial purpose.
+]
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+[I’m solving it by using computer vision to detect a QR code, straighten it, and count all its tiny squares — basically high-tech square counting for fun! 😄
+]
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- [ HTML, CSS, JavaScript]
+- [None (pure web-based project)]
+- [ jsQR (for QR detection), OpenCV.js (for image processing and warping)]
+- [ Web browser, Code editor (e.g., VS Code), Live Server for testing]
 
 For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+- [Computer/Laptop with a modern web browser]
+- [ Any system capable of running JavaScript in a browser (recommended: 4GB+ RAM, dual-core processor)]
+- [None beyond a computer and mouse/keyboard for file upload]
 
-### Implementation
-For Software:
-# Installation
-[commands]
-
-# Run
-[commands]
 
 ### Project Documentation
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot1](https://drive.google.com/file/d/16RL9vy-UYNZLhO2QyCKMhiGgFNqDsmmK/view?usp=drivesdk)
+*This project allows you to upload a QR code image, which is then analyzed using **jsQR** to detect its corners and decode its content. Using **OpenCV.js**, the detected QR is warped into a perfect square to correct any tilt or perspective distortion. The image is converted to black and white, and a scan is performed across the middle row to count black-to-white transitions. From these transitions, the number of modules (squares) per side is calculated, and the total number of squares is determined. Finally, the webpage displays the decoded QR text, modules per side, and the total square count.
+*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot2](https://drive.google.com/file/d/16RL9vy-UYNZLhO2QyCKMhiGgFNqDsmmK/view?usp=drivesdk)
+*This project allows you to upload a QR code image, which is then analyzed using jsQR to detect its corners and decode its content. Using OpenCV.js, the detected QR is warped into a perfect square to correct any tilt or perspective distortion. The image is converted to black and white, and a scan is performed across the middle row to count black-to-white transitions. From these transitions, the number of modules (squares) per side is calculated, and the total number of squares is determined. Finally, the webpage displays the decoded QR text, modules per side, and the total square count.*
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot3](https://drive.google.com/file/d/16RL9vy-UYNZLhO2QyCKMhiGgFNqDsmmK/view?usp=drivesdk)
+*This project allows you to upload a QR code image, which is then analyzed using jsQR to detect its corners and decode its content. Using OpenCV.js, the detected QR is warped into a perfect square to correct any tilt or perspective distortion. The image is converted to black and white, and a scan is performed across the middle row to count black-to-white transitions. From these transitions, the number of modules (squares) per side is calculated, and the total number of squares is determined. Finally, the webpage displays the decoded QR text, modules per side, and the total square count.*
 
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
 
-For Hardware:
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
 
 ### Project Demo
 # Video
-[Add your demo video link here]
+(https://drive.google.com/file/d/16RL9vy-UYNZLhO2QyCKMhiGgFNqDsmmK/view?usp=drivesdk)
 *Explain what the video demonstrates*
 
 # Additional Demos
 [Add any extra demo materials/links]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [nezha jaleel]:code developer
+- [gauripriya p g]: content creator
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
