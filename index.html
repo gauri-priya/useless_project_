@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>QR Code Square Counter</title>
+<script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+<script async src="https://docs.opencv.org/4.x/opencv.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+  .container { background: #fff; padding: 20px; border-radius: 8px; max-width: 700px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  canvas { border: 1px solid #ccc; max-width: 100%; margin-top: 10px; background: white; }
+  #info { background: #fafafa; padding: 10px; margin-top: 10px; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>QR Code Square Counter</h2>
+  <input type="file" id="fileInput" accept="image/*">
+  <canvas id="canvas"></canvas>
+  <div id="info"><p>Upload a QR code image.</p></div>
+</div>
+
+<script>
+let cvReady = false;
+Module = { onRuntimeInitialized() { cvReady = true; console.log("OpenCV.js Ready"); } };
+
+document.getElementById("fileInput").addEventListener("change", function() {
+  if (!cvReady) {
+    alert("Please wait for OpenCV.js to load.");
+    return;
+  }
+  const file = this.files[0];
+  if (!file) return;
+
+  const img = new Image();
+  img.onload = function() {
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+
+    // Detect QR with jsQR
+    const imageData = ctx.getImageData(0, 0, img.width, img.height);
+    const qr = jsQR(imageData.data, img.width, img.height, { inversionAttempts: "attemptBoth" });
+    if (!qr) {
+      document.getElementById("info").innerHTML = "<p style='color:red;'>No QR code detected. Try a clearer image.</p>";
+      return;
+    }
+
+    // Warp QR to perfect square
+    const warpedSize = 300;
+    const srcMat = cv.imread(canvas);
+    const dstMat = new cv.Mat();
+    const srcTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
+      qr.location.topLeftCorner.x, qr.location.topLeftCorner.y,
+      qr.location.topRightCorner.x, qr.location.topRightCorner.y,
+      qr.location.bottomRightCorner.x, qr.location.bottomRightCorner.y,
+      qr.location.bottomLeftCorner.x, qr.location.bottomLeftCorner.y
+    ]);
+    const dstTri = cv.matFromArray(4, 1, cv.CV_32FC2, [
+      0, 0,
+      warpedSize, 0,
+      warpedSize, warpedSize,
+      0, warpedSize
+    ]);
+    const M = cv.getPerspectiveTransform(srcTri, dstTri);
+    cv.warpPerspective(srcMat, dstMat, M, new cv.Size(warpedSize, warpedSize));
+
+    // Convert to grayscale + threshold
+    let gray = new cv.Mat();
+    cv.cvtColor(dstMat, gray, cv.COLOR_RGBA2GRAY);
+    cv.threshold(gray, gray, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU);
+
+    // Count modules by scanning mid-row
+    const midRow = Math.floor(warpedSize / 2);
+    let rowPixels = [];
+    for (let x = 0; x < warpedSize; x++) {
+      rowPixels.push(gray.ucharPtr(midRow, x)[0] === 0 ? 1 : 0);
+    }
+    let transitions = 0, last = rowPixels[0];
+    for (let i = 1; i < rowPixels.length; i++) {
+      if (rowPixels[i] !== last) {
+        transitions++;
+        last = rowPixels[i];
+      }
+    }
+    const modulesPerSide = Math.round(transitions / 2);
+    const totalSquares = modulesPerSide * modulesPerSide;
+
+    // Show warped QR in the canvas
+    canvas.width = warpedSize;
+    canvas.height = warpedSize;
+    cv.imshow(canvas, gray);
+
+    // Show result
+    document.getElementById("info").innerHTML = `
+      <p><strong>Decoded Text:</strong> ${qr.data}</p>
+      <p><strong>Modules per side:</strong> ${modulesPerSide}</p>
+      <p><strong>Total Squares:</strong> ${totalSquares}</p>
+    `;
+
+    // Cleanup
+    srcMat.delete(); dstMat.delete(); gray.delete();
+    srcTri.delete(); dstTri.delete(); M.delete();
+  };
+  img.src = URL.createObjectURL(file);
+});
+</script>
+
+</body>
+</html>
+
+
+
